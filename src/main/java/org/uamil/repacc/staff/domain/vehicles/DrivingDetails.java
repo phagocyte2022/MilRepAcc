@@ -2,7 +2,7 @@ package org.uamil.repacc.staff.domain.vehicles;
 
 import jakarta.persistence.*;
 import lombok.*;
-import org.uamil.repacc.staff.domain.Person;
+import org.uamil.repacc.staff.domain.Serviceman;
 
 import java.util.List;
 
@@ -21,7 +21,7 @@ public class DrivingDetails {
 
     @ManyToOne
     @JoinColumn(name = "person_id")
-    private Person person;
+    private Serviceman serviceman;
 
     @OneToMany(mappedBy = "drivingDetails")
     private List<DrivingLicense> drivingLicense;

@@ -1,7 +1,9 @@
 package org.uamil.repacc.staff.domain;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.uamil.repacc.staff.domain.contacts.Address;
 import org.uamil.repacc.staff.domain.contacts.PhoneNumber;
@@ -13,6 +15,8 @@ import java.util.List;
 @Entity
 @Table(name = "person")
 @Inheritance(strategy = InheritanceType.JOINED)
+@NoArgsConstructor
+@AllArgsConstructor
 public abstract class Person {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,12 +30,10 @@ public abstract class Person {
     @Column(name = "middle_name")
     private String middleName;
 
-    @OneToOne (mappedBy = "person")
-    private Address registeredAddress;
-
-    @OneToOne (mappedBy = "person")
-    private Address actualAddress;
+    @OneToMany (mappedBy = "person")
+    private List <Address> address;
 
     @OneToMany(mappedBy = "person")
     private List<PhoneNumber> phoneNumber;
+
 }

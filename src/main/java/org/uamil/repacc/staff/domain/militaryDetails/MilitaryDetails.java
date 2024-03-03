@@ -3,6 +3,7 @@ package org.uamil.repacc.staff.domain.militaryDetails;
 import jakarta.persistence.*;
 import lombok.*;
 import org.uamil.repacc.staff.domain.Person;
+import org.uamil.repacc.staff.domain.Serviceman;
 
 import java.util.List;
 
@@ -21,7 +22,7 @@ public class MilitaryDetails {
 
     @OneToOne
     @JoinColumn(name = "person_id")
-    private Person person;
+    private Serviceman serviceman;
 
     @Column(name = "position")
     private String position;
@@ -33,6 +34,18 @@ public class MilitaryDetails {
     @Enumerated(EnumType.STRING)
     @Column(name = "military_rank")
     private MilitaryRank militaryRank;
+
+    @OneToMany(mappedBy = "militaryDetails")
+    private List<MilCertificate> milCertificate;
+
+    @OneToMany(mappedBy = "militaryDetails")
+    private List<CombatCertificate> CombatCertificate;
+
+    @Column(name = "contract_signed")
+    private boolean contractSigned;
+
+    @OneToMany(mappedBy = "militaryDetails")
+    private List <Contract> contract;
 
     public enum MilitaryRankGroup {
         солдати,
@@ -66,16 +79,5 @@ public class MilitaryDetails {
         генерал
     }
 
-    @OneToMany(mappedBy = "militaryDetails")
-    private List<MilCertificate> milCertificate;
-
-    @OneToMany(mappedBy = "militaryDetails")
-    private List<CombatCertificate> CombatCertificate;
-
-    @Column(name = "contract_signed")
-    private boolean contractSigned;
-
-    @OneToMany(mappedBy = "militaryDetails")
-    private List <Contract> contract;
 
 }

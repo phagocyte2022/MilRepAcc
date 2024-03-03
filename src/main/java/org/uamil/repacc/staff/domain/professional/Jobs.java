@@ -2,7 +2,7 @@ package org.uamil.repacc.staff.domain.professional;
 
 import jakarta.persistence.*;
 import lombok.*;
-import org.uamil.repacc.staff.domain.Person;
+import org.uamil.repacc.staff.domain.Serviceman;
 
 @Getter
 @Setter
@@ -10,8 +10,8 @@ import org.uamil.repacc.staff.domain.Person;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "job")
-public class Job {
+@Table(name = "jobs")
+public class Jobs {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -20,7 +20,7 @@ public class Job {
 
     @ManyToOne
     @JoinColumn(name = "person_id")
-    private Person person;
+    private Serviceman serviceman;
 
     @Column(name = "employer")
     private String employer;

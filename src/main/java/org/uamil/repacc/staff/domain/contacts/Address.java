@@ -17,9 +17,12 @@ public class Address {
     @Column(name = "address_id")
     private Long addressId;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "person_id")
     private Person person;
+
+    @Column(name = "address_label")
+    private String addressLabel;
 
     @Column(name = "post_code")
     private String postCode;

@@ -9,7 +9,7 @@ import org.uamil.repacc.staff.domain.family.Relatives;
 import org.uamil.repacc.staff.domain.militaryDetails.MilitaryDetails;
 import org.uamil.repacc.staff.domain.personal.Passport;
 import org.uamil.repacc.staff.domain.professional.Education;
-import org.uamil.repacc.staff.domain.professional.Job;
+import org.uamil.repacc.staff.domain.professional.Jobs;
 import org.uamil.repacc.staff.domain.religion.Religion;
 import org.uamil.repacc.staff.domain.vehicles.DrivingDetails;
 
@@ -18,10 +18,10 @@ import java.util.List;
 
 @Getter
 @Setter
-@NoArgsConstructor
-@AllArgsConstructor
 @Entity
 @Table(name = "serviceman")
+@NoArgsConstructor
+@AllArgsConstructor
 public class Serviceman extends Person {
 
     @Column(name = "birthDate")
@@ -30,28 +30,28 @@ public class Serviceman extends Person {
     @Column(name = "tax_code")
     private String taxCode;
 
-    @OneToMany(mappedBy = "person")
+    @OneToMany(mappedBy = "serviceman")
     private List<Passport> passport;
 
-    @OneToMany(mappedBy = "person")
+    @OneToMany(mappedBy = "serviceman")
     private List<Education> education;
 
-    @OneToMany(mappedBy = "person")
-    private List <Job>jobList;
+    @OneToMany(mappedBy = "serviceman")
+    private List <Jobs>jobList;
 
-    @OneToMany(mappedBy = "person")
+    @OneToMany(mappedBy = "serviceman")
     private List <Relatives> relatives;
 
-    @OneToOne(mappedBy = "person")
+    @OneToOne(mappedBy = "serviceman")
     private MilitaryDetails militaryDetails;
 
     @Column(name = "blood_type")
     private String bloodType;
 
-    @OneToMany(mappedBy = "person")
+    @OneToMany(mappedBy = "serviceman")
     private List <Religion>religion;
 
-    @OneToMany(mappedBy = "person")
+    @OneToMany(mappedBy = "serviceman")
     private List <DrivingDetails>drivingDetails;
 
 }

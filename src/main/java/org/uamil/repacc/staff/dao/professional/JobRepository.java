@@ -1,7 +1,9 @@
 package org.uamil.repacc.staff.dao.professional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.uamil.repacc.staff.domain.professional.Job;
+import org.springframework.stereotype.Repository;
+import org.uamil.repacc.staff.domain.professional.Jobs;
 
-public interface JobRepository extends JpaRepository<Job, Long> {
+@Repository
+public interface JobRepository extends JpaRepository<Jobs, Long> {
 }

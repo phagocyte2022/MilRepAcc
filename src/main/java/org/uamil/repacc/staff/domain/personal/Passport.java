@@ -3,6 +3,7 @@ package org.uamil.repacc.staff.domain.personal;
 import jakarta.persistence.*;
 import lombok.*;
 import org.uamil.repacc.staff.domain.Person;
+import org.uamil.repacc.staff.domain.Serviceman;
 
 import java.time.LocalDate;
 
@@ -21,7 +22,7 @@ public class Passport {
 
     @ManyToOne
     @JoinColumn(name = "person_id")
-    private Person person;
+    private Serviceman serviceman;
 
     @Column(name = "passport_seria")
     private String passportSeria;

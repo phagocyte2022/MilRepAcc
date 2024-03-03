@@ -4,6 +4,7 @@ package org.uamil.repacc.staff.domain.religion;
 import jakarta.persistence.*;
 import lombok.*;
 import org.uamil.repacc.staff.domain.Person;
+import org.uamil.repacc.staff.domain.Serviceman;
 
 @Getter
 @Setter
@@ -20,7 +21,7 @@ public class Religion {
 
     @ManyToOne
     @JoinColumn(name = "person_id")
-    private Person person;
+    private Serviceman serviceman;
 
     @Column(name = "religious")
     private boolean religious;
