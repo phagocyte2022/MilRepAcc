@@ -11,6 +11,6 @@ spring:
     username: postgres
     password: 1508
   flyway:
-    enabled: false
+    enabled: true
     baseline-on-migrate: true
     cleanDisabled: false

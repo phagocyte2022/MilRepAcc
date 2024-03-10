@@ -8,15 +8,10 @@ import lombok.Setter;
 import org.uamil.repacc.staff.domain.contacts.Address;
 import org.uamil.repacc.staff.domain.contacts.PhoneNumber;
 
+import java.time.LocalDate;
 import java.util.List;
 
-@Getter
-@Setter
-@Entity
-@Table(name = "person")
-@Inheritance(strategy = InheritanceType.JOINED)
-@NoArgsConstructor
-@AllArgsConstructor
+@MappedSuperclass
 public abstract class Person {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,11 +24,7 @@ public abstract class Person {
     private String firstName;
     @Column(name = "middle_name")
     private String middleName;
-
-    @OneToMany (mappedBy = "person")
-    private List <Address> address;
-
-    @OneToMany(mappedBy = "person")
-    private List<PhoneNumber> phoneNumber;
+    @Column(name = "birthDate")
+    private LocalDate birthDate;
 
 }

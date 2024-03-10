@@ -25,10 +25,10 @@ public class Relatives extends Person {
     @Column(name = "label")
     private String label;
 
-    @OneToOne (mappedBy = "person")
+    @OneToOne (mappedBy = "relatives")
     private Address actualAddress;
 
-    @OneToMany(mappedBy = "person")
+    @OneToMany(mappedBy = "relatives")
     private List<PhoneNumber> phoneNumber;
 
     @Column(name = "occupation")

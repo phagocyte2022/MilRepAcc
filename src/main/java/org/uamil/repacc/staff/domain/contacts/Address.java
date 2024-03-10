@@ -3,6 +3,8 @@ package org.uamil.repacc.staff.domain.contacts;
 import jakarta.persistence.*;
 import lombok.*;
 import org.uamil.repacc.staff.domain.Person;
+import org.uamil.repacc.staff.domain.Serviceman;
+import org.uamil.repacc.staff.domain.family.Relatives;
 
 @Getter
 @Setter
@@ -18,8 +20,12 @@ public class Address {
     private Long addressId;
 
     @ManyToOne
-    @JoinColumn(name = "person_id")
-    private Person person;
+    @JoinColumn(name = "person_id", insertable=false, updatable=false)
+    private Serviceman serviceman;
+
+    @ManyToOne
+    @JoinColumn(name = "person_id", insertable=false, updatable=false)
+    private Relatives relatives;
 
     @Column(name = "address_label")
     private String addressLabel;

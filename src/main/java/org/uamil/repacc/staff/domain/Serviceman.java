@@ -5,6 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.uamil.repacc.staff.domain.contacts.Address;
+import org.uamil.repacc.staff.domain.contacts.PhoneNumber;
 import org.uamil.repacc.staff.domain.family.Relatives;
 import org.uamil.repacc.staff.domain.militaryDetails.MilitaryDetails;
 import org.uamil.repacc.staff.domain.personal.Passport;
@@ -24,11 +26,15 @@ import java.util.List;
 @AllArgsConstructor
 public class Serviceman extends Person {
 
-    @Column(name = "birthDate")
-    private LocalDate birthDate;
 
     @Column(name = "tax_code")
     private String taxCode;
+
+    @OneToMany (mappedBy = "serviceman")
+    private List <Address> address;
+
+    @OneToMany(mappedBy = "serviceman")
+    private List<PhoneNumber> phoneNumber;
 
     @OneToMany(mappedBy = "serviceman")
     private List<Passport> passport;
