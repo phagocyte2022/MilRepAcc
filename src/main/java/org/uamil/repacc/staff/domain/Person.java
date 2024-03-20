@@ -5,13 +5,14 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.uamil.repacc.staff.domain.contacts.Address;
-import org.uamil.repacc.staff.domain.contacts.PhoneNumber;
 
 import java.time.LocalDate;
-import java.util.List;
 
 @MappedSuperclass
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public abstract class Person {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -1,5 +1,6 @@
 package org.uamil.repacc.staff.domain.vehicles;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -16,6 +17,7 @@ public class Vehicles {
     @Column(name = "vehicle_id")
     private Long vehicleId;
 
+    @JsonBackReference
     @ManyToOne
     @JoinColumn(name = "driving_details_id")
     private DrivingDetails drivingDetails;

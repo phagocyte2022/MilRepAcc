@@ -1,5 +1,6 @@
 package org.uamil.repacc.staff.domain.professional;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.*;
 import org.uamil.repacc.staff.domain.Person;
@@ -19,8 +20,9 @@ public class Education {
     @Column(name = "education_id")
     private Long educationId;
 
+    @JsonBackReference
     @ManyToOne
-    @JoinColumn(name = "person_id")
+    @JoinColumn(name = "serviceman_id")
     private Serviceman serviceman;
 
     @Column(name = "education_level")

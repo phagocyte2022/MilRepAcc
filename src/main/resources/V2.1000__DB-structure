@@ -1,17 +1,19 @@
-alter table if exists address drop constraint if exists FKdyvmv2vn65jasp3p0hddn0tw7;
+alter table if exists address drop constraint if exists FK19xm0pxpcl64h447j2bl51aus;
+alter table if exists address drop constraint if exists FKlton5co11nanqsm8fjodfk9f1;
 alter table if exists combat_certificate drop constraint if exists FKjn7hw5eryalybhyedu4nc3mg2;
 alter table if exists contract drop constraint if exists FKih9loscybtcycmwqwrohhjbhb;
 alter table if exists driving_categories drop constraint if exists FKnyjth7gy643ywk3suq2lvgkf3;
-alter table if exists driving_details drop constraint if exists FKd7v9mqq7sbps69i5aob98mlt6;
+alter table if exists driving_details drop constraint if exists FKdjanuivilneoo9ynljlg0w2fh;
 alter table if exists driving_license drop constraint if exists FKk079qh64twltvdh12xqtnabds;
-alter table if exists education drop constraint if exists FKhlrmvvg7qdgqf8gwjjfogg3ns;
-alter table if exists jobs drop constraint if exists FK6pk3cow9qm6kl8j6scuhup200;
+alter table if exists education drop constraint if exists FKfhvu5qjfs6f0trc8kldp05rce;
+alter table if exists jobs drop constraint if exists FKdk4h50p1wd9jtv5vceenx1rl1;
 alter table if exists mil_certificate drop constraint if exists FK74ihlfm08ssq48qk3kcnfgjaa;
-alter table if exists military_details drop constraint if exists FKn1t7h6sgur1d0ukgkfqqqlu2h;
-alter table if exists passport drop constraint if exists FKh08kcf5pvq6x1ff4h85gqblem;
-alter table if exists phone_number drop constraint if exists FKaugjlxeyw5q59uwrlxc0bn6gy;
-alter table if exists relatives drop constraint if exists FK47o1hsdw73iawoaepr071vsew;
-alter table if exists religion drop constraint if exists FKkfa7gewrjnor2dqqx7bexkn7s;
+alter table if exists military_details drop constraint if exists FKfai3j6p89pfwcfqq4yfg37s1r;
+alter table if exists passport drop constraint if exists FK5igahdjakqb1tsqldp9xt2xy1;
+alter table if exists phone_number drop constraint if exists FKaigkilb2a6dm2vbteql1uimhd;
+alter table if exists phone_number drop constraint if exists FK2t66b3mnkh48ybnt6oq9umu18;
+alter table if exists relatives drop constraint if exists FKkuvg2o24vatj5606b7pp5lkw0;
+alter table if exists religion drop constraint if exists FKaxx308vrh2s802o0n35oxd22v;
 alter table if exists vehicles drop constraint if exists FKg9u68l7yyayt9pa8p7mxaai7u;
 drop table if exists address cascade;
 drop table if exists combat_certificate cascade;
@@ -33,7 +35,8 @@ drop table if exists vehicles cascade;
 create table address
     (
     address_id bigserial not null,
-    person_id bigint,
+    serviceman_id bigint,
+    relatives_id bigint,
     address_label varchar(255),
     country varchar(255),
     region varchar(255),
@@ -68,7 +71,6 @@ create table contract
     primary key (contract_id)
     );
 
-
 create table driving_categories
     (
     driving_categories_id bigserial not null,
@@ -84,7 +86,7 @@ create table driving_categories
 create table driving_details
     (
     driving_details_id bigserial not null,
-    person_id bigint,
+    serviceman_id bigint,
     primary key (driving_details_id)
     );
 
@@ -102,7 +104,7 @@ create table driving_license
 create table education
     (
     education_id bigserial not null,
-    person_id bigint,
+    serviceman_id bigint,
     education_level varchar(255)
         check (education_level in ('неповна_середня','середня','базова_вища','вища')),
     speciality varchar(255),
@@ -112,7 +114,7 @@ create table education
 create table jobs
     (
     job_id bigserial not null,
-    person_id bigint,
+    serviceman_id bigint,
     employer varchar(255),
     job_title varchar(255),
     primary key (job_id)
@@ -134,7 +136,7 @@ create table mil_certificate
 create table military_details
     (
     military_details_id bigserial not null,
-    person_id bigint unique,
+    serviceman_id bigint unique,
     military_rank_group varchar(255)
         check (military_rank_group in ('солдати','сержанти','офіцери')),
     military_rank varchar(255)
@@ -153,7 +155,7 @@ create table military_details
 create table passport
     (
     passport_id bigserial not null,
-    person_id bigint,
+    serviceman_id bigint,
     passport_seria varchar(255),
     passport_number varchar(255),
     passport_issue_date date,
@@ -164,7 +166,8 @@ create table passport
 create table phone_number
     (
     phone_number_id bigserial not null,
-    person_id bigint,
+    serviceman_id bigint,
+    relatives_id bigint,
     phone_number varchar(255),
     primary key (phone_number_id)
     );
@@ -172,6 +175,7 @@ create table phone_number
 create table relatives
     (
     person_id bigserial not null,
+    serviceman_id bigint,
     label varchar(255),
     last_name varchar(255),
     first_name varchar(255),
@@ -184,7 +188,7 @@ create table relatives
 create table religion
     (
     religion_id bigserial not null,
-    person_id bigint,
+    serviceman_id bigint,
     religious boolean,
     religion_type varchar(255),
     religion_confession varchar(255),
@@ -215,18 +219,20 @@ create table vehicles
     primary key (vehicle_id)
     );
 
-alter table if exists address add constraint FKdyvmv2vn65jasp3p0hddn0tw7 foreign key (person_id) references relatives;
+alter table if exists address add constraint FK19xm0pxpcl64h447j2bl51aus foreign key (relatives_id) references relatives;
+alter table if exists address add constraint FKlton5co11nanqsm8fjodfk9f1 foreign key (serviceman_id) references serviceman;
 alter table if exists combat_certificate add constraint FKjn7hw5eryalybhyedu4nc3mg2 foreign key (military_details_id) references military_details;
 alter table if exists contract add constraint FKih9loscybtcycmwqwrohhjbhb foreign key (military_details_id) references military_details;
 alter table if exists driving_categories add constraint FKnyjth7gy643ywk3suq2lvgkf3 foreign key (driving_license_id) references driving_license;
-alter table if exists driving_details add constraint FKd7v9mqq7sbps69i5aob98mlt6 foreign key (person_id) references serviceman;
+alter table if exists driving_details add constraint FKdjanuivilneoo9ynljlg0w2fh foreign key (serviceman_id) references serviceman;
 alter table if exists driving_license add constraint FKk079qh64twltvdh12xqtnabds foreign key (driving_details_id) references driving_details;
-alter table if exists education add constraint FKhlrmvvg7qdgqf8gwjjfogg3ns foreign key (person_id) references serviceman;
-alter table if exists jobs add constraint FK6pk3cow9qm6kl8j6scuhup200 foreign key (person_id) references serviceman;
+alter table if exists education add constraint FKfhvu5qjfs6f0trc8kldp05rce foreign key (serviceman_id) references serviceman;
+alter table if exists jobs add constraint FKdk4h50p1wd9jtv5vceenx1rl1 foreign key (serviceman_id) references serviceman;
 alter table if exists mil_certificate add constraint FK74ihlfm08ssq48qk3kcnfgjaa foreign key (military_details_id) references military_details;
-alter table if exists military_details add constraint FKn1t7h6sgur1d0ukgkfqqqlu2h foreign key (person_id) references serviceman;
-alter table if exists passport add constraint FKh08kcf5pvq6x1ff4h85gqblem foreign key (person_id) references serviceman;
-alter table if exists phone_number add constraint FKaugjlxeyw5q59uwrlxc0bn6gy foreign key (person_id) references relatives;
-alter table if exists relatives add constraint FK47o1hsdw73iawoaepr071vsew foreign key (person_id) references serviceman;
-alter table if exists religion add constraint FKkfa7gewrjnor2dqqx7bexkn7s foreign key (person_id) references serviceman;
+alter table if exists military_details add constraint FKfai3j6p89pfwcfqq4yfg37s1r foreign key (serviceman_id) references serviceman;
+alter table if exists passport add constraint FK5igahdjakqb1tsqldp9xt2xy1 foreign key (serviceman_id) references serviceman;
+alter table if exists phone_number add constraint FKaigkilb2a6dm2vbteql1uimhd foreign key (relatives_id) references relatives;
+alter table if exists phone_number add constraint FK2t66b3mnkh48ybnt6oq9umu18 foreign key (serviceman_id) references serviceman;
+alter table if exists relatives add constraint FKkuvg2o24vatj5606b7pp5lkw0 foreign key (serviceman_id) references serviceman;
+alter table if exists religion add constraint FKaxx308vrh2s802o0n35oxd22v foreign key (serviceman_id) references serviceman;
 alter table if exists vehicles add constraint FKg9u68l7yyayt9pa8p7mxaai7u foreign key (driving_details_id) references driving_details;

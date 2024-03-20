@@ -1,5 +1,6 @@
 package org.uamil.repacc.staff.domain.vehicles;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -18,6 +19,7 @@ public class DrivingCategories {
     @Column(name = "driving_categories_id")
     private Long drivingCategoriesId;
 
+    @JsonBackReference
     @OneToOne
     @JoinColumn(name = "driving_license_id")
     private DrivingLicense drivingLicense;

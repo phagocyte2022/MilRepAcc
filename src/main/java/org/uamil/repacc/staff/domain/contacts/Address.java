@@ -1,5 +1,6 @@
 package org.uamil.repacc.staff.domain.contacts;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.*;
 import org.uamil.repacc.staff.domain.Person;
@@ -19,12 +20,14 @@ public class Address {
     @Column(name = "address_id")
     private Long addressId;
 
+    @JsonBackReference
     @ManyToOne
-    @JoinColumn(name = "person_id", insertable=false, updatable=false)
+    @JoinColumn(name = "serviceman_id")
     private Serviceman serviceman;
 
+    @JsonBackReference
     @ManyToOne
-    @JoinColumn(name = "person_id", insertable=false, updatable=false)
+    @JoinColumn(name = "relatives_id")
     private Relatives relatives;
 
     @Column(name = "address_label")

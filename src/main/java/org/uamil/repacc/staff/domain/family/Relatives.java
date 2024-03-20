@@ -1,5 +1,7 @@
 package org.uamil.repacc.staff.domain.family;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 import org.uamil.repacc.staff.domain.Person;
@@ -18,16 +20,19 @@ import java.util.List;
 @Table(name = "relatives")
 public class Relatives extends Person {
 
+    @JsonBackReference
     @ManyToOne
-    @JoinColumn(name = "person_id", insertable=false, updatable=false)
+    @JoinColumn(name = "serviceman_id")
     private Serviceman serviceman;
 
     @Column(name = "label")
     private String label;
 
+    @JsonManagedReference
     @OneToOne (mappedBy = "relatives")
-    private Address actualAddress;
+    private Address address;
 
+    @JsonManagedReference
     @OneToMany(mappedBy = "relatives")
     private List<PhoneNumber> phoneNumber;
 

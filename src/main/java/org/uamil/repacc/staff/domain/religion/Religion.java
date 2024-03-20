@@ -1,6 +1,7 @@
 package org.uamil.repacc.staff.domain.religion;
 
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.*;
 import org.uamil.repacc.staff.domain.Person;
@@ -19,8 +20,9 @@ public class Religion {
     @Column(name = "religion_id")
     private Long religionId;
 
+    @JsonBackReference
     @ManyToOne
-    @JoinColumn(name = "person_id")
+    @JoinColumn(name = "serviceman_id")
     private Serviceman serviceman;
 
     @Column(name = "religious")

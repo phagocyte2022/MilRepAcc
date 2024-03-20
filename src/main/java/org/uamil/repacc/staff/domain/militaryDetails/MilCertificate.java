@@ -1,5 +1,6 @@
 package org.uamil.repacc.staff.domain.militaryDetails;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.*;
 import org.uamil.repacc.staff.domain.Person;
@@ -19,6 +20,7 @@ public class MilCertificate {
     @Column(name = "mil_certificate_id")
     private Long milCertificateId;
 
+    @JsonBackReference
     @ManyToOne
     @JoinColumn(name = "military_details_id")
     private MilitaryDetails militaryDetails;

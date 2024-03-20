@@ -1,5 +1,7 @@
 package org.uamil.repacc.staff.domain.vehicles;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -18,6 +20,7 @@ public class DrivingLicense {
     @Column(name = "driving_license_id")
     private Long drivingLicenseId;
 
+    @JsonBackReference
     @ManyToOne
     @JoinColumn(name = "driving_details_id")
     private DrivingDetails drivingDetails;
@@ -34,6 +37,7 @@ public class DrivingLicense {
     @Column(name = "driving_license_expiry_date")
     private LocalDate drivingLicenseExpiryDate;
 
+    @JsonManagedReference
     @OneToOne(mappedBy = "drivingLicense")
     private DrivingCategories drivingCategories;
 

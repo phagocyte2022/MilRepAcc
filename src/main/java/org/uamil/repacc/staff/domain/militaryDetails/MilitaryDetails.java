@@ -1,5 +1,7 @@
 package org.uamil.repacc.staff.domain.militaryDetails;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 import org.uamil.repacc.staff.domain.Person;
@@ -20,8 +22,9 @@ public class MilitaryDetails {
     @Column(name = "military_details_id")
     private Long militaryServiceId;
 
+    @JsonBackReference
     @OneToOne
-    @JoinColumn(name = "person_id")
+    @JoinColumn(name = "serviceman_id")
     private Serviceman serviceman;
 
     @Column(name = "position")
@@ -35,15 +38,18 @@ public class MilitaryDetails {
     @Column(name = "military_rank")
     private MilitaryRank militaryRank;
 
+    @JsonManagedReference
     @OneToMany(mappedBy = "militaryDetails")
     private List<MilCertificate> milCertificate;
 
+    @JsonManagedReference
     @OneToMany(mappedBy = "militaryDetails")
     private List<CombatCertificate> CombatCertificate;
 
     @Column(name = "contract_signed")
     private boolean contractSigned;
 
+    @JsonManagedReference
     @OneToMany(mappedBy = "militaryDetails")
     private List <Contract> contract;
 

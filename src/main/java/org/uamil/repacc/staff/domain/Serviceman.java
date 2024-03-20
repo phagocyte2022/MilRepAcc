@@ -1,5 +1,6 @@
 package org.uamil.repacc.staff.domain;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -30,34 +31,44 @@ public class Serviceman extends Person {
     @Column(name = "tax_code")
     private String taxCode;
 
+    @JsonManagedReference
     @OneToMany (mappedBy = "serviceman")
     private List <Address> address;
 
+    @JsonManagedReference
     @OneToMany(mappedBy = "serviceman")
     private List<PhoneNumber> phoneNumber;
 
+    @JsonManagedReference
     @OneToMany(mappedBy = "serviceman")
     private List<Passport> passport;
 
+    @JsonManagedReference
     @OneToMany(mappedBy = "serviceman")
     private List<Education> education;
 
+    @JsonManagedReference
     @OneToMany(mappedBy = "serviceman")
     private List <Jobs>jobList;
 
+    @JsonManagedReference
     @OneToMany(mappedBy = "serviceman")
     private List <Relatives> relatives;
 
+    @JsonManagedReference
     @OneToOne(mappedBy = "serviceman")
     private MilitaryDetails militaryDetails;
 
     @Column(name = "blood_type")
     private String bloodType;
 
+    @JsonManagedReference
     @OneToMany(mappedBy = "serviceman")
     private List <Religion>religion;
 
+    @JsonManagedReference
     @OneToMany(mappedBy = "serviceman")
     private List <DrivingDetails>drivingDetails;
+
 
 }

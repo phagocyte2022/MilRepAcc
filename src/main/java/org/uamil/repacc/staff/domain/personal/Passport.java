@@ -1,5 +1,6 @@
 package org.uamil.repacc.staff.domain.personal;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.*;
 import org.uamil.repacc.staff.domain.Person;
@@ -20,8 +21,9 @@ public class Passport {
     @Column(name = "passport_id")
     private Long passportId;
 
+    @JsonBackReference
     @ManyToOne
-    @JoinColumn(name = "person_id")
+    @JoinColumn(name = "serviceman_id")
     private Serviceman serviceman;
 
     @Column(name = "passport_seria")
@@ -35,5 +37,4 @@ public class Passport {
 
     @Column(name = "passport_expiry_date")
     private LocalDate passportExpiryDate;
-
 }

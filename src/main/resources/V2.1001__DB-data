@@ -1,0 +1,193 @@
+INSERT INTO serviceman
+(
+   	last_name, first_name, middle_name, birth_date, tax_code, blood_type
+)
+
+VALUES
+(
+	'LastName1', 'FirstName1', 'MiddleName1', '1991-01-01', 'TaxCode1', 'BloodType1'
+);
+
+INSERT INTO relatives
+(
+    label, serviceman_id, last_name, first_name, middle_name, birth_date, occupation
+)
+
+VALUES
+(
+    'father', 1, 'RelativeLastName1-1', 'RelativeFirstName1-1', 'RelativeMiddleName1-1', '1971-01-01', 'Occupation1-1'
+),
+
+(
+    'mother', 1, 'RelativeLastName1-2', 'RelativeFirstName1-2', 'RelativeMiddleName1-2', '1971-01-02', 'Occupation1-2'
+);
+
+INSERT INTO address
+(
+    serviceman_id, relatives_id, address_label,
+    country, region, district, settlement, street,
+    building, extension, apartment, post_code
+)
+VALUES
+(
+    1, null, 'registration',
+    'Country1-1', 'region1-1', 'district1-1', 'Settlement1-1', 'street1-1',
+    'building1-1', 'extension1-1', 'apartment1-1', 'postcode1-1'
+),
+(
+        1, null, 'actual',
+        'Country1-2', 'region1-2', 'district1-2', 'Settlement1-2', 'street1-2',
+        'building1-2', 'extension1-2', 'apartment1-2', 'postcode1-2'
+),
+(
+        null, 1, 'registration',
+        'Country1-1-1', 'region1-1-1', 'district1-1-1', 'Settlement1-1-1', 'street1-1-1',
+        'building1-1-1', 'extension1-1-1', 'apartment1-1-1', 'postcode1-1-1'
+),
+(
+        null, 2, 'registration',
+        'Country1-2-1', 'region1-2-1', 'district1-2-1', 'Settlement1-2-1', 'street1-2-1',
+        'building1-2-1', 'extension1-2-1', 'apartment1-2-1', 'postcode1-2-1'
+);
+
+
+INSERT INTO phone_number
+(
+     serviceman_id, relatives_id, phone_number
+)
+VALUES
+(
+    1, null, 'PhoneNumber1-1'
+),
+(
+    1, null, 'PhoneNumber1-2'
+),
+(
+    null, 1, 'PhoneNumber1-1-1'
+),
+(
+    null, 2, 'PhoneNumber1-2-1'
+);
+
+INSERT INTO passport
+(
+    serviceman_id, passport_seria, passport_number, passport_issue_date, passport_expiry_date
+)
+VALUES
+(
+    1, 'PassportSeria1', 'PassportNumber1', '2001-01-01', '2051-01-01'
+);
+
+INSERT INTO education
+(
+    serviceman_id, education_level, speciality
+)
+VALUES
+(
+    1, 'вища', 'Speciality1-1'
+);
+
+INSERT INTO jobs
+(
+    serviceman_id, employer, job_title
+)
+ VALUES
+(
+    1, 'Employer1', 'Job1'
+);
+
+
+INSERT INTO military_details
+(
+    serviceman_id, military_rank_group, military_rank, position, contract_signed
+)
+VALUES
+(
+    1, 'солдати', 'солдат', 'Position1', 'true'
+);
+
+INSERT INTO mil_certificate
+(
+    military_details_id, mil_certificate_type, mil_certificate_seria, mil_certificate_number,
+    mil_certificate_issue_date, mil_certificate_issued_by
+)
+VALUES
+(
+    1, 'військовий_квиток', 'MisCertSeria1', 'MilSertNumber1',
+    '2021-01-01', 'MilCertIssuer1'
+);
+
+INSERT INTO combat_certificate
+(
+    military_details_id, combat_certificate_seria, combat_certificate_number,
+    combat_certificate_issue_date
+)
+VALUES
+(
+    1, 'CombatCertSeria1', 'CombatCertNumber1',
+    '2023-01-01'
+);
+
+INSERT INTO contract
+(
+    military_details_id, contract_seria, contract_number,
+    contract_issue_date, contract_expiry_date
+)
+VALUEs
+(
+    1, 'ContractSeria1', 'ContractNumber1',
+    '2021-01-01', '2024-01-01'
+);
+
+INSERT INTO driving_details
+(
+    serviceman_id
+)
+VALUES
+(
+    1
+);
+
+INSERT INTO driving_license
+(
+    driving_details_id, driving_license_seria, driving_license_number,
+    driving_license_issue_date, driving_license_expiry_date
+)
+VALUES
+(
+    1, 'DrivingLicenseSeria1', 'DrivingLicenseNumber1',
+    '2010-01-01', '2040-01-01'
+);
+
+INSERT INTO driving_categories
+(
+    driving_license_id,
+    category_a, category_b, category_c,
+    category_d, category_e
+)
+VALUES
+(
+    1,
+    false, true, true,
+    false, false
+);
+
+INSERT INTO vehicles
+(
+    driving_details_id, vehicle_produce, vehicle_model,
+    vehicle_number_plate, vehicle_color
+)
+VALUES
+(
+    1, 'AUDI', 'Q7',
+    'AA1111AA', 'BLACK'
+);
+
+INSERT INTO religion
+(
+    serviceman_id, religious, religion_type, religion_confession, church
+)
+VALUES
+(
+    1, true, 'ReligionType1', 'Confession1', 'Church1'
+);

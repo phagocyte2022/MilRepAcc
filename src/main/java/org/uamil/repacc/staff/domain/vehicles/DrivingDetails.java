@@ -1,5 +1,7 @@
 package org.uamil.repacc.staff.domain.vehicles;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 import org.uamil.repacc.staff.domain.Serviceman;
@@ -19,13 +21,16 @@ public class DrivingDetails {
     @Column(name = "driving_details_id")
     private Long drivingDetailsId;
 
+    @JsonBackReference
     @ManyToOne
-    @JoinColumn(name = "person_id")
+    @JoinColumn(name = "serviceman_id")
     private Serviceman serviceman;
 
+    @JsonManagedReference
     @OneToMany(mappedBy = "drivingDetails")
     private List<DrivingLicense> drivingLicense;
 
+    @JsonManagedReference
     @OneToMany(mappedBy = "drivingDetails")
     private List<Vehicles> vehicles;
 
