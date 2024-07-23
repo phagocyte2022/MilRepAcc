@@ -3,6 +3,7 @@ package org.uamil.repacc.staff.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.uamil.repacc.staff.dto.ServicemanBasicDTO;
 import org.uamil.repacc.staff.dto.ServicemanDTO;
 import org.uamil.repacc.staff.service.ServicemanService;
 
@@ -19,6 +20,12 @@ public class ServicemanController {
     public ResponseEntity<List<ServicemanDTO>> getAllServicemen() {
         List<ServicemanDTO> servicemen = servicemanService.getAllServicemen();
         return ResponseEntity.ok(servicemen);
+    }
+
+    @GetMapping("/listbasic")
+    public ResponseEntity<List<ServicemanBasicDTO>> getAllServicemenBasicInfo() {
+        List<ServicemanBasicDTO> servicemanBasic = servicemanService.getAllServicemenBasicInfo();
+        return ResponseEntity.ok(servicemanBasic);
     }
 
     @GetMapping("/id/{id}")

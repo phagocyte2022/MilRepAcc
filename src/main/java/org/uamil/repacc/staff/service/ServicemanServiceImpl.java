@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.uamil.repacc.staff.dao.ServicemanRepository;
 import org.uamil.repacc.staff.domain.Serviceman;
+import org.uamil.repacc.staff.dto.ServicemanBasicDTO;
 import org.uamil.repacc.staff.dto.ServicemanDTO;
 
 import java.util.List;
@@ -20,14 +21,18 @@ public class ServicemanServiceImpl implements ServicemanService{
     public List<ServicemanDTO> getAllServicemen() {
         List<Serviceman> servicemen = servicemanRepository.findAll();
         return servicemen.stream()
-                .map(this::convertToDTO)
+                .map(this::convertEntityToDTO)
                 .collect(Collectors.toList());
+    }
+    @Override
+    public List<ServicemanBasicDTO> getAllServicemenBasicInfo() {
+        return servicemanRepository.findAllBasicInfo();
     }
 
     @Override
     public List<ServicemanDTO> getFilteredServicemen(String firstName, String lastName) {
         return servicemanRepository.findByFirstNameContainingIgnoreCaseAndLastNameContainingIgnoreCase(firstName, lastName)
-                .stream().map(this::convertToDTO).collect(Collectors.toList());
+                .stream().map(this::convertEntityToDTO).collect(Collectors.toList());
     }
 
 
@@ -35,16 +40,16 @@ public class ServicemanServiceImpl implements ServicemanService{
     public ServicemanDTO getServicemanById(Long id) {
         Optional<Serviceman> servicemanOptional = servicemanRepository.findById(id);
         if (servicemanOptional.isPresent()) {
-            return convertToDTO(servicemanOptional.get());
+            return convertEntityToDTO(servicemanOptional.get());
         }
         throw new RuntimeException("Serviceman not found with id: " + id);
     }
 
     @Override
     public ServicemanDTO createServiceman(ServicemanDTO servicemanDTO) {
-        Serviceman serviceman = convertToEntity(servicemanDTO);
+        Serviceman serviceman = convertDTOToEntity(servicemanDTO);
         Serviceman savedServiceman = servicemanRepository.save(serviceman);
-        return convertToDTO(savedServiceman);
+        return convertEntityToDTO(savedServiceman);
     }
 
     @Override
@@ -66,7 +71,7 @@ public class ServicemanServiceImpl implements ServicemanService{
         serviceman.setBloodType(servicemanDTO.getBloodType());
         serviceman.setReligion(servicemanDTO.getReligions());
         serviceman.setDrivingDetails(servicemanDTO.getDrivingDetails());
-        return convertToDTO(servicemanRepository.save(serviceman));
+        return convertEntityToDTO(servicemanRepository.save(serviceman));
     }
 
     @Override
@@ -74,7 +79,7 @@ public class ServicemanServiceImpl implements ServicemanService{
         servicemanRepository.deleteById(id);
     }
 
-    private ServicemanDTO convertToDTO(Serviceman serviceman) {
+    private ServicemanDTO convertEntityToDTO(Serviceman serviceman) {
         ServicemanDTO servicemanDTO = new ServicemanDTO();
         servicemanDTO.setPersonId(serviceman.getPersonId());
         servicemanDTO.setLastName(serviceman.getLastName());
@@ -96,7 +101,7 @@ public class ServicemanServiceImpl implements ServicemanService{
         return servicemanDTO;
     }
 
-    private Serviceman convertToEntity(ServicemanDTO servicemanDTO) {
+    private Serviceman convertDTOToEntity(ServicemanDTO servicemanDTO) {
         Serviceman serviceman = new Serviceman();
         serviceman.setPersonId(servicemanDTO.getPersonId());
         serviceman.setLastName(servicemanDTO.getLastName());
@@ -117,6 +122,4 @@ public class ServicemanServiceImpl implements ServicemanService{
 
         return serviceman;
     }
-
-
 }
