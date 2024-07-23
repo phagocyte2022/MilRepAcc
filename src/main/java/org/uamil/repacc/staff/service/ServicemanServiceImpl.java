@@ -13,13 +13,25 @@ import java.util.stream.Collectors;
 @Service
 public class ServicemanServiceImpl implements ServicemanService{
 
-    private final ServicemanRepository servicemanRepository;
-
     @Autowired
-    public ServicemanServiceImpl(ServicemanRepository servicemanRepository) {
-        this.servicemanRepository = servicemanRepository;
+    private ServicemanRepository servicemanRepository;
+
+    @Override
+    public List<ServicemanDTO> getAllServicemen() {
+        List<Serviceman> servicemen = servicemanRepository.findAll();
+        return servicemen.stream()
+                .map(this::convertToDTO)
+                .collect(Collectors.toList());
     }
 
+    @Override
+    public List<ServicemanDTO> getFilteredServicemen(String firstName, String lastName) {
+        return servicemanRepository.findByFirstNameContainingIgnoreCaseAndLastNameContainingIgnoreCase(firstName, lastName)
+                .stream().map(this::convertToDTO).collect(Collectors.toList());
+    }
+
+
+    @Override
     public ServicemanDTO getServicemanById(Long id) {
         Optional<Serviceman> servicemanOptional = servicemanRepository.findById(id);
         if (servicemanOptional.isPresent()) {
@@ -28,6 +40,7 @@ public class ServicemanServiceImpl implements ServicemanService{
         throw new RuntimeException("Serviceman not found with id: " + id);
     }
 
+    @Override
     public ServicemanDTO createServiceman(ServicemanDTO servicemanDTO) {
         Serviceman serviceman = convertToEntity(servicemanDTO);
         Serviceman savedServiceman = servicemanRepository.save(serviceman);
@@ -35,13 +48,30 @@ public class ServicemanServiceImpl implements ServicemanService{
     }
 
     @Override
-    public ServicemanDTO updateStudent(Long id, ServicemanDTO servicemanDTO) {
-        return null;
+    public ServicemanDTO updateServiceman(Long id, ServicemanDTO servicemanDTO) {
+        Serviceman serviceman = servicemanRepository.findById(id).orElseThrow(() -> new RuntimeException("Serviceman not found"));
+        serviceman.setPersonId(servicemanDTO.getPersonId());
+        serviceman.setLastName(servicemanDTO.getLastName());
+        serviceman.setFirstName(servicemanDTO.getFirstName());
+        serviceman.setMiddleName(servicemanDTO.getMiddleName());
+        serviceman.setBirthDate(servicemanDTO.getBirthDate());
+        serviceman.setTaxCode(servicemanDTO.getTaxCode());
+        serviceman.setAddress(servicemanDTO.getAddresses());
+        serviceman.setPhoneNumber(servicemanDTO.getPhoneNumbers());
+        serviceman.setPassport(servicemanDTO.getPassports());
+        serviceman.setEducation(servicemanDTO.getEducations());
+        serviceman.setJobList(servicemanDTO.getJobs());
+        serviceman.setRelatives(servicemanDTO.getRelatives());
+        serviceman.setMilitaryDetails(servicemanDTO.getMilitaryDetails());
+        serviceman.setBloodType(servicemanDTO.getBloodType());
+        serviceman.setReligion(servicemanDTO.getReligions());
+        serviceman.setDrivingDetails(servicemanDTO.getDrivingDetails());
+        return convertToDTO(servicemanRepository.save(serviceman));
     }
 
     @Override
     public void deleteServiceman(Long id) {
-
+        servicemanRepository.deleteById(id);
     }
 
     private ServicemanDTO convertToDTO(Serviceman serviceman) {
@@ -88,10 +118,5 @@ public class ServicemanServiceImpl implements ServicemanService{
         return serviceman;
     }
 
-    public List<ServicemanDTO> getAllServicemen() {
-        List<Serviceman> servicemen = servicemanRepository.findAll();
-        return servicemen.stream()
-                .map(this::convertToDTO)
-                .collect(Collectors.toList());
-    }
+
 }
